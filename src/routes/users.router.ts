@@ -22,7 +22,6 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
     const id = req?.params?.id;
 
     try {
-        // _id in MongoDB is an objectID type so we need to find our specific document by querying
         const query = { _id: new ObjectId(id) };
         const user = await collections.users.findOne(query);
 
@@ -54,7 +53,7 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
     try {
         const updatedUser = req.body;
         const query = { _id: new ObjectId(id) };
-        // $set adds or updates all fields
+
         const result = await collections.users.updateOne(query, { $set: updatedUser });
 
         result

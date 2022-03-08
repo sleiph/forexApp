@@ -37,21 +37,21 @@ async function applySchemaValidation(db: mongoDB.Db) {
     const jsonSchema = {
         $jsonSchema: {
             bsonType: "object",
-            required: ["name", "price", "category"],
+            required: ["email", "password", "credits"],
             additionalProperties: false,
             properties: {
                 _id: {},
                 name: {
                     bsonType: "string",
-                    description: "'name' is required and is a string",
+                    description: "'email' is required and is a string",
                 },
                 price: {
                     bsonType: "number",
-                    description: "'price' is required and is a number",
+                    description: "'password' is required and is a string",
                 },
                 category: {
-                    bsonType: "string",
-                    description: "'category' is required and is a string",
+                    bsonType: "number",
+                    description: "'credits' are required and are a number",
                 },
             },
         },
