@@ -1,4 +1,5 @@
 import IStock from "./stock.type";
+import ITrade from "./trade.type";
 
 export default interface IUser {
   id?: any | null,
@@ -6,6 +7,6 @@ export default interface IUser {
   email: string,
   password: string,
   credits: number,
-  stocks?: IStock,
-  trades?: Array<string>
+  stocks?: Array<IStock>,
+  trades?: Array<ITrade>
 }

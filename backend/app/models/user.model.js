@@ -9,14 +9,15 @@ const User = mongoose.model(
     credits: Number,
     stocks: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Stock"
+        name: String,
+        quantity: Number
       }
     ],
     trades: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Trade"
+        name: String,
+        quantity: Number,
+        trade_type: String
       }
     ]
   })

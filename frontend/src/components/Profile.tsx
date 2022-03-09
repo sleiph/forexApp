@@ -1,8 +1,42 @@
 import React from "react";
+import { number } from "yup/lib/locale";
 import { getCurrentUser } from "../services/auth.service";
+import { getExchangeRate } from "../services/currency.service";
+import { getUserBoard } from "../services/user.service";
+import IStock from "../types/stock.type";
+import ITrade from "../types/trade.type";
 
 const Profile: React.FC = () => {
+  const [usd, setUsd] = React.useState<number>()
+
   const currentUser = getCurrentUser();
+
+  React.useEffect(() => {
+    async function getExchange() {
+      // they give me a max number of api requests
+      // so lets not use them all right now
+      //const res = await getExchangeRate()
+      const res = 0.76
+      setUsd(res)
+    }
+    getExchange()
+  }, [])
+
+  var GBPformatter = new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 2
+  
+  });
+  var USDformatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+
+  });
+
+  if (!usd) {
+    return (<div>Loading...</div>)
+  }
 
   return (
     <div className="container">
@@ -22,14 +56,20 @@ const Profile: React.FC = () => {
         <strong>Email:</strong> {currentUser.email}
       </p>
       <p>
-        <strong>Credits:</strong> {currentUser.credits}
+        <strong>Credits:</strong> {GBPformatter.format(currentUser.credits)} or {USDformatter.format(currentUser.credits / usd)}
       </p>
       <strong>Stocks Owned:</strong>
       <ul>
         {
-          "test"
-        //currentUser.stocks &&
-          //currentUser.stocks.map((stock: string, index: number) => <li key={index}>{stock}</li>)
+        currentUser.stocks &&
+          currentUser.stocks.map((stock: IStock, index: number) => <li key={index}>{stock.name}</li>)
+        }
+      </ul>
+      <strong>Last Trades:</strong>
+      <ul>
+        {
+        currentUser.trades &&
+          currentUser.trades.map((trade: ITrade, index: number) => <li key={index}>{trade.name}</li>)
         }
       </ul>
     </div>

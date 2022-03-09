@@ -61,14 +61,14 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.stocks.length; i++) {
         companies.push("STOCK_" + user.stocks[i].name.toUpperCase());
       }*/
-
+      console.log(user);
       res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
         credits: user.credits,
-        stocks: [],
-        trades: [],
+        stocks: user.stocks,
+        trades: user.trades,
         accessToken: token
       });
     });
