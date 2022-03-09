@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 
-import { getPublicContent } from "../services/user.service";
+import { getUserBoard } from "../services/user.service";
+import EventBus from "../common/EventBus";
 
-const Home: React.FC = () => {
+const TradingHistory: React.FC = () => {
   const [content, setContent] = useState<string>("");
 
   useEffect(() => {
-    getPublicContent().then(
+    getUserBoard().then(
       (response) => {
         setContent(response.data);
       },
       (error) => {
         const _content =
-          (error.response && error.response.data) ||
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
           error.message ||
           error.toString();
 
         setContent(_content);
+
+        if (error.response && error.response.status === 401) {
+          EventBus.dispatch("logout");
+        }
       }
     );
   }, []);
@@ -30,4 +37,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default TradingHistory;

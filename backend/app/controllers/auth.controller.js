@@ -61,7 +61,7 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.stocks.length; i++) {
         companies.push("STOCK_" + user.stocks[i].name.toUpperCase());
       }*/
-      console.log(user);
+      
       res.status(200).send({
         id: user._id,
         username: user.username,

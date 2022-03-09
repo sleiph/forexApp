@@ -9,9 +9,9 @@ import IUser from './types/user.type';
 
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
+import Stocks from "./components/Stocks";
 import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
+import TradingHistory from "./components/TradingHistory";
 
 import EventBus from "./common/EventBus";
 
@@ -46,14 +46,14 @@ const App: React.FC = () => {
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
-              Home
+              Stocks
             </Link>
           </li>
 
           {currentUser && (
             <li className="nav-item">
               <Link to={"/user"} className="nav-link">
-                User
+                Trading History
               </Link>
             </li>
           )}
@@ -91,11 +91,11 @@ const App: React.FC = () => {
 
       <div className="container mt-3">
         <Switch>
-          <Route exact path={["/", "/home"]} component={Home} />
+          <Route exact path={["/", "/home"]} component={Stocks} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
-          <Route path="/user" component={BoardUser} />
+          <Route path="/user" component={TradingHistory} />
         </Switch>
       </div>
     </div>

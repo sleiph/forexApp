@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { number } from "yup/lib/locale";
 import { getCurrentUser } from "../services/auth.service";
 import { getExchangeRate } from "../services/currency.service";
 import { getUserBoard } from "../services/user.service";
+import { getExchangeRateFinnhub } from "../services/forex.service";
 import IStock from "../types/stock.type";
 import ITrade from "../types/trade.type";
 
 const Profile: React.FC = () => {
-  const [usd, setUsd] = React.useState<number>()
+  const [usd, setUsd] = useState<number>()
 
   const currentUser = getCurrentUser();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getExchange() {
-      // they give me a max number of api requests
-      // so lets not use them all right now
+      // real time API, but with limited uses
       //const res = await getExchangeRate()
-      const res = 0.76
+      // free API, but not real time
+      const res = await getExchangeRateFinnhub()
       setUsd(res)
     }
     getExchange()
