@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http");
 const cors = require("cors");
 
 require("dotenv").config()
@@ -17,6 +18,11 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+const server = http.createServer(app);
+
+const WebSocket = require("ws").Server;
+const ws = new WebSocket({ port: 2500 })
+
 const db = require("./app/models");
 
 db.mongoose
@@ -31,6 +37,30 @@ db.mongoose
     console.error("Connection error", err);
     process.exit();
   });
+
+ws.on('connection', async(socket) => {
+  socket.isAlive = true;
+  socket.on('pong', () => {
+    socket.isAlive = true;
+  })
+  
+  socket.on('message', async(message) => {
+    console.log("I'm a websocket, and I just shake hands")
+  })
+  
+  socket.on('close', () => {
+    console.log("I lost a client");
+  })
+  console.log("One more client connected")
+})
+
+setInterval(() => {
+  ws.clients.forEach((ws) => {
+    if (!ws.isAlive) return ws.terminate();
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, 10000);
 
 // simple route
 app.get("/", (req, res) => {

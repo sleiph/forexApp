@@ -3,7 +3,7 @@
 ### Tecnologias
 
 #### backend
-Node.js | Express | Mongoose | dotenv | websocket | cors | Jsonwebtoken
+Node.js | Express | Mongoose | dotenv | websocket | cors | Jsonwebtoken | ws
 
 #### frontend
 React.js | Typescript | React Router Dom | Axios | Bootstrap | Web-vitals | Formik | Yup
